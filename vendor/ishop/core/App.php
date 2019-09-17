@@ -17,6 +17,9 @@ class App
         // который собирает другие объекты и массив параметров
         self::$app = Registry::instance();
         $this->getParams(); // заполняем контейнер параметрами
+
+        // Обрабатываем все исключения
+        new ErrorHandler();
     }
 
     protected function getParams()
