@@ -20,6 +20,9 @@ class App
 
         // Обрабатываем все исключения
         new ErrorHandler();
+
+        // Маршрутизатор
+        Router::dispatch($query);
     }
 
     protected function getParams()
