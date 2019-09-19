@@ -5,4 +5,4 @@ require_once  CONF . '/routes.php';  // готовые маршруты
 
 new \ishop\App();   // создали контейнер
 
-debug(\ishop\Router::getRoutes());
+//debug(\ishop\Router::getRoutes());
