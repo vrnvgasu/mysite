@@ -64,7 +64,7 @@ class Router
             }
         } else {
             // не нашли маршрут. Ошибка, которую перехватит ErrorHandler
-            throw new \Exception("Чтраница не найдена", 404);
+            throw new \Exception("Страница не найдена", 404);
         }
     }
 
@@ -105,7 +105,7 @@ class Router
                 /**$route Array
                 [action] => view
                 [prefix] =>
-                [controller] => page
+                [controller] => Page
                  */
 
                 return true;
