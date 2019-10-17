@@ -14,7 +14,11 @@ abstract class Controller
     public $prefix;
     public $layout;
     public $data = []; // данные для view
-    public $meta = []; // метаданные для view
+    public $meta = [
+        'title' => '',
+        'desc' => '',
+        'keywords' => '',
+    ]; // метаданные для view
 
     public function __construct($route)
     {

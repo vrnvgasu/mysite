@@ -41,6 +41,10 @@ class View
      */
     public function render($data)
     {
+        if (is_array($data)) {
+            extract($data);
+        }
+
         // Получаем путь к странице нашего вида
         // /home/vagrant/project2/app/views/Main/index.php
         $viewFile = APP . "/views/{$this->prefix}{$this->controler}/{$this->view}.php";
@@ -71,9 +75,9 @@ class View
 
     public function getMeta()
     {
-        $meta = '';
+        /*$meta = '';
         if (isset($this->meta['title'])) {
-            $meta .= "<title>{$this->meta['title']}</title>";
+            $meta .=
         }
         if (isset($this->meta['desc'])) {
             $meta .= "<meta name=\"description\" content=\"{$this->meta['desc']}\">";
@@ -82,6 +86,11 @@ class View
             $meta .= "<meta http-equiv=\"Content-Type\" content=\"{$this->meta['keywords']}\"></title>";
         }
 
-        return $meta;
+        return $meta;*/
+        $output = "<title>{$this->meta['title']}</title>";
+        $output .= "<meta name=\"description\" content=\"{$this->meta['desc']}\">";
+        $output .= "<meta http-equiv=\"Content-Type\" content=\"{$this->meta['keywords']}\"></title>";
+
+        return $output;
     }
 }
