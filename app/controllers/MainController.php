@@ -8,7 +8,7 @@ class MainController extends AppController
 {
     public function indexAction()
     {
-        debug($this->route);
-        echo "Welcome!";
+        //debug($this->route);
+        $this->setMeta('Главная', 'самая главная', 'круто супер главная');
     }
 }

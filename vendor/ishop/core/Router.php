@@ -33,6 +33,7 @@ class Router
     }
 
     // вызывает существующий контроллер и его метод (action)
+    // также отрисовываем страницу через метод контроллера getView()
     // или возвращает 404
     public static function dispatch($url)
     {
@@ -54,6 +55,8 @@ class Router
                 // вызываем нужный метод
                 if (method_exists($controllerObject, $action)) {
                     $controllerObject->$action();
+                    // Отрисовали страницу
+                    $controllerObject->getView();
                 } else {
                     throw new \Exception("Метод {$controller}::{$action} не найден",
                     404);

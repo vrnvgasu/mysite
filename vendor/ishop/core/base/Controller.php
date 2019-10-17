@@ -12,6 +12,7 @@ abstract class Controller
     public $model;
     public $view;
     public $prefix;
+    public $layout;
     public $data = []; // данные для view
     public $meta = []; // метаданные для view
 
@@ -24,6 +25,14 @@ abstract class Controller
         // в этих папках будем создавать файлы с именем экшена (его представление)
         $this->view = $route['action'];
         $this->prefix = $route['prefix'];
+    }
+
+    /**
+     * Создаем страницу и получаем ее через view
+     */
+    public function getView() {
+        $viewObject = new View($this->route, $this->layout, $this->view, $this->meta);
+        $viewObject->render($this->data);
     }
 
     /**
