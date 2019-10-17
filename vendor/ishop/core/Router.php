@@ -37,6 +37,9 @@ class Router
     // или возвращает 404
     public static function dispatch($url)
     {
+        // Удалим параметры из строки типа ?id=1
+        $url = self::removeQueryString($url);
+
         if (self::matchRoute($url)) {
             // есть маршрут
             $controller = 'app\controllers\\' . self::$route['prefix'] .
@@ -131,5 +134,21 @@ class Router
     protected static function lowerCamelCase($name)
     {
         return lcfirst(self::upperCamelCase($name));
+    }
+
+    protected static function removeQueryString($url)
+    {
+        if ($url) {
+            // разбиваем http://mysite.test/page/view/?id=1&count=2
+            // на строку запроса page/view/ и параметры id=1&count=2
+            $params = explode('?', $url, 2);
+
+            // проверяем, что в строке запроса нет =
+            if (false === strpos($params[0], '=')) {
+                return rtrim($params[0], '/');
+            } {
+                return '';
+            }
+        }
     }
 }
