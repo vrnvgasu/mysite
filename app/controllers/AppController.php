@@ -4,6 +4,7 @@
 namespace app\controllers;
 
 
+use app\models\AppModel;
 use ishop\base\Controller;
 
 /**
@@ -13,5 +14,10 @@ use ishop\base\Controller;
  */
 class AppController extends Controller
 {
-
+    public function __construct($route)
+    {
+        // сохраняем родительский __construct из асбтр. кл. Controller
+        parent::__construct($route);
+        new AppModel();
+    }
 }

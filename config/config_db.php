@@ -4,7 +4,7 @@
  */
 
 return [
-    'dsn' => 'mysql:host=localhostldbname=mysite,charset=utf8',
+    'dsn' => 'mysql:host=localhost;dbname=mysite;charset=utf8',
     'user' => 'root',
-    'secret' => 'secret',
+    'pass' => 'secret',
 ];

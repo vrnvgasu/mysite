@@ -4,6 +4,8 @@
 namespace ishop\base;
 
 
+use ishop\DB;
+
 abstract class Model
 {
     // в нем хранятся данные с названия идентичными в БД
@@ -13,6 +15,7 @@ abstract class Model
 
     public function __construct()
     {
-        
+        // создаем подключение 1 раз через singleton
+        DB::instance();
     }
 }
