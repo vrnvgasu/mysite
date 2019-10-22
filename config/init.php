@@ -7,7 +7,7 @@ define("CORE", ROOT . '/vendor/ishop/core');
 define("LIBS", ROOT . '/vendor/ishop/core/libs');
 define("CACHE", ROOT . '/tmp/cache');   // папка кэша
 define("CONF", ROOT . '/config');
-define("LAYOUT", 'default'); // название шаблона по умолчанию
+define("LAYOUT", 'watches'); // название шаблона по умолчанию
 
 // http://mysite.test/index.php
 $app_path = "http://{$_SERVER['HTTP_HOST']}{$_SERVER['PHP_SELF']}";
