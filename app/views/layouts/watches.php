@@ -8,16 +8,16 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <html>
 <head>
     <?= $this->getMeta(); ?>
-    <link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="/css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
 
     <!--theme-style-->
-    <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="/css/style.css" rel="stylesheet" type="text/css" media="all" />
     <!--//theme-style-->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
      <!--start-menu-->
-    <link href="css/memenu.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="/css/memenu.css" rel="stylesheet" type="text/css" media="all" />
 
 
 </head>
@@ -29,10 +29,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             <div class="col-md-6 top-header-left">
                 <div class="drop">
                     <div class="box">
-                        <select tabindex="4" class="dropdown drop">
-                            <option value="" class="label">Dollar :</option>
-                            <option value="1">Dollar</option>
-                            <option value="2">Euro</option>
+                        <select id="currency" tabindex="4" class="dropdown drop">
+                           <?php new \app\widgets\currency\Currency(); ?>
                         </select>
                     </div>
                     <div class="box1">
@@ -321,6 +319,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
   });
 </script>
+<!--Свой скрипт-->
+<script src="/js/main.js"></script>
 
 </body>
 </html>

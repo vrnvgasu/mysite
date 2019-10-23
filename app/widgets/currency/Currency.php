@@ -3,6 +3,7 @@
 
 namespace app\widgets\currency;
 
+use ishop\App;
 use RedBeanPHP\R;
 
 class Currency
@@ -25,9 +26,10 @@ class Currency
      */
     public function run()
     {
-        self::getCurrencies();
-        self::getCurrency();
-        $this->getHtml();
+        // в контейнер закину в базовом контроллере AppController
+        $this->currencies = App::$app->getProperty('currencies');
+        $this->currency = App::$app->getProperty('currency');
+        echo $this->getHtml(); // отображаем код
     }
 
     public static function getCurrencies()
@@ -63,8 +65,11 @@ class Currency
         return $currency;
     }
 
+    // подключает шаблон $this->tpl
     protected function getHtml()
     {
-
+        ob_start(); // шаблон сохраняем в буфер
+        require_once $this->tpl;
+        return ob_get_clean(); // возвращаем код шаблона из буфера
     }
 }

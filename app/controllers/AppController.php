@@ -22,13 +22,10 @@ class AppController extends Controller
         parent::__construct($route);
         new AppModel();
 
-        // вручную поставим куку евро на весь сайт. Должны получить соответствующую $currency
-        setcookie('currency', 'EUR', time() + 3600*24*7, '/');
         //Засовываем список валют в регистр в контейнере
         App::$app->serProperty('currencies', Currency::getCurrencies());
         //Засовываем текущую валюту в регистр в контейнере
         $currency = Currency::getCurrency( App::$app->getProperty('currencies'));
         App::$app->serProperty('currency', $currency);
-        debug(App::$app->getProperties());
     }
 }
