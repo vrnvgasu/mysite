@@ -8,6 +8,8 @@ use app\models\AppModel;
 use app\widgets\currency\Currency;
 use ishop\App;
 use ishop\base\Controller;
+use ishop\Cache;
+use RedBeanPHP\R;
 
 /**
  * Это будет базовый класс
@@ -27,5 +29,22 @@ class AppController extends Controller
         //Засовываем текущую валюту в регистр в контейнере
         $currency = Currency::getCurrency( App::$app->getProperty('currencies'));
         App::$app->serProperty('currency', $currency);
+
+        // Засовываем список категорий в контейнер
+        App::$app->serProperty('cats', static::cacheCategory());
+    }
+
+    // Кэширование категорий
+    public static function cacheCategory()
+    {
+        $cache = Cache::instance();
+        $cats = $cache->get('cats');
+
+        if (!$cats) {
+            $cats = R::getAssoc("SELECT * FROM category");
+            $cache->set('cats', $cats);
+        }
+
+        return $cats;
     }
 }

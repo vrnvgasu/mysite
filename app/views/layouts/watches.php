@@ -70,7 +70,15 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <div class="container">
         <div class="header">
             <div class="col-md-9 header-left">
-                <div class="top-nav">
+                <div class="menu">
+                    <?php
+                        new \app\widgets\menu\Menu([
+                            'tpl' => WWW . '/menu/menu.php', // переопределили путь к шаблону
+                            'container' => 'ul',
+                        ]);
+                    ?>
+                </div>
+                <!--<div class="top-nav">
                     <ul class="memenu skyblue"><li class="active"><a href="index.php">Home</a></li>
                         <li class="grid"><a href="#">Men</a>
                             <div class="mepanel">
@@ -206,7 +214,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                         <li class="grid"><a href="contact.html">Contact</a>
                         </li>
                     </ul>
-                </div>
+                </div>-->
                 <div class="clearfix"> </div>
             </div>
             <div class="col-md-3 header-right">
