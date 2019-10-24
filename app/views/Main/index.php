@@ -42,6 +42,9 @@
 <!--about-end-->
 <!--product-starts-->
 <?php if ($hits) : ?>
+    <?php
+        $curr = \ishop\App::$app->getProperty('currency');
+    ?>
     <div class="product">
         <div class="container">
             <div class="product-top">
@@ -55,9 +58,13 @@
                                     <p>Explore Now</p>
                                     <h4>
                                         <!--href="cart/add?id=$hit->id" на тот случай, если отключен js-->
-                                        <a class="add-to-cat-link" href="cart/add?id=<?=$hit->id?>"><i></i></a> <span class=" item_price">$ <?=$hit->price?></span>
+                                        <a class="add-to-cat-link" href="cart/add?id=<?=$hit->id?>"><i></i></a> <span class=" item_price">
+                                            <?= $curr['symbol_left']; ?> <?=round($hit->price * $curr['value']);?> <?= $curr['symbol_right']; ?>
+                                        </span>
                                         <?php if ($hit->old_price) : ?>
-                                            <small><del><?=$hit->old_price?></del></small>
+                                            <small><del>
+                                                    <?= $curr['symbol_left']; ?> <?=round($hit->old_price * $curr['value']);?> <?= $curr['symbol_right']; ?>
+                                                </del></small>
                                         <?php endif; ?>
                                     </h4>
                                 </div>
