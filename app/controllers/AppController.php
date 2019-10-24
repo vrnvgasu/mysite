@@ -41,6 +41,7 @@ class AppController extends Controller
         $cats = $cache->get('cats');
 
         if (!$cats) {
+            // это будет ассоциативный массив с ключом в виде id
             $cats = R::getAssoc("SELECT * FROM category");
             $cache->set('cats', $cats);
         }

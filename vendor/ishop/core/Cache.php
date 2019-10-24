@@ -36,7 +36,7 @@ class Cache
             $content = unserialize(file_get_contents($file));
 
             if (time() <= $content['end_time']) {
-                return $content;
+                return $content['data'];
             } else {
                 // если устарел, то удаляем файл
                 unlink($file);
