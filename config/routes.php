@@ -2,6 +2,16 @@
 
 use ishop\Router;
 
+// роут для карточки продукта http://mysite.test/product/chasi-2
+Router::add('^product/(?P<alias>[a-z0-9-]+)/?$', ['controller' => 'Product', 'action' => 'view']);
+/**
+    [controller] => Product
+    [action] => view
+    [alias] => chasi-1
+    [prefix] =>
+ */
+
+
 //default routes - добавляем дефолтные маршруты
 
 // Для админки

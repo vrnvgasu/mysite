@@ -7,12 +7,17 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!DOCTYPE html>
 <html>
 <head>
+    <!--Все ссылки делает к корню сайта-->
+    <base href="/">
+
     <?= $this->getMeta(); ?>
     <link href="/css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
 
     <!--Подключим https://github.com/marioloncarek/megamenu-js-->
-    <link href="megamenu/css/ionicons.min.css" rel="stylesheet" type="text/css" media="all" />
-    <link href="megamenu/css/style.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="/megamenu/css/ionicons.min.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="/megamenu/css/style.css" rel="stylesheet" type="text/css" media="all" />
+
+    <link rel="stylesheet" href="css/flexslider.css" type="text/css" media="screen" />
 
     <!--theme-style-->
     <link href="/css/style.css" rel="stylesheet" type="text/css" media="all" />
@@ -63,7 +68,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!--top-header-->
 <!--start-logo-->
 <div class="logo">
-    <a href="index1.html"><h1>Luxury Watches</h1></a>
+    <a href="<?=PATH;?>"><h1>Luxury Watches</h1></a>
 </div>
 <!--start-logo-->
 <!--bottom-header-->
@@ -169,15 +174,14 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
 <script src="/js/jquery-1.11.0.min.js"></script>
 <script src="/js/simpleCart.min.js"> </script>
-<script type="text/javascript" src="/js/memenu.js"></script>
-<script>$(document).ready(function(){$(".memenu").memenu();});</script>
+
 <!--dropdown-->
 <script src="/js/jquery.easydropdown.js"></script>
 <!--Slider-Starts-Here-->
 <script src="/js/responsiveslides.min.js"></script>
 
 <!--https://github.com/marioloncarek/megamenu-js-->
-<script src="megamenu/js/megamenu.js"></script>
+<script src="/megamenu/js/megamenu.js"></script>
 
 <script>
   // You can also use "$(window).load(function() {"
@@ -201,6 +205,18 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 </script>
 <!--Свой скрипт-->
 <script src="/js/main.js"></script>
+
+<script src="/js/imagezoom.js"></script>
+<script defer src="/js/jquery.flexslider.js"></script>
+<script>
+  // Can also be used with $(document).ready()
+  $(window).load(function() {
+    $('.flexslider').flexslider({
+      animation: "slide",
+      controlNav: "thumbnails"
+    });
+  });
+</script>
 
 </body>
 </html>
