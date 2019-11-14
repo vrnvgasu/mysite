@@ -172,6 +172,19 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 </div>
 <!--footer-end-->
 
+<?php
+    $curr = \ishop\App::$app->getProperty('currency');
+?>
+
+<script>
+    'use strict';
+    /*Ввдем сразу ряд переменных для js*/
+    let path = '<?=PATH;?>',
+        course = <?=$curr['value'];?>,
+        symboleLeft = '<?=$curr['symbol_left'];?>',
+        symboleRigth = '<?=$curr['symbol_right'];?>'
+</script>
+
 <script src="/js/jquery-1.11.0.min.js"></script>
 <script src="/js/simpleCart.min.js"> </script>
 
