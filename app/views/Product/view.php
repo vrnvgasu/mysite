@@ -104,12 +104,12 @@
                             </div>
 
                             <!--
-                            class="add-to-cat-link" - пользовательский класс для скрипта добавления в корзину
+                            class="add-to-cart-link" - пользовательский класс для скрипта добавления в корзину
                             -->
                             <a id="productAdd"
                                data-id="<?=$product->id?>"
                                href="cart/add?id=<?=$product->id?>"
-                               class="add-cart item_add add-to-cat-link">
+                               class="add-cart item_add add-to-cart-link">
                                 ADD TO CART
                             </a>
 

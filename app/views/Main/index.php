@@ -58,7 +58,7 @@
                                     <p>Explore Now</p>
                                     <h4>
                                         <!--href="cart/add?id=$hit->id" на тот случай, если отключен js-->
-                                        <a class="add-to-cat-link" href="cart/add?id=<?=$hit->id?>"><i></i></a> <span class=" item_price">
+                                        <a data-id="<?=$hit->id;?>" class="add-to-cart-link" href="cart/add?id=<?=$hit->id?>"><i></i></a> <span class=" item_price">
                                             <?= $curr['symbol_left']; ?> <?=round($hit->price * $curr['value']);?> <?= $curr['symbol_right']; ?>
                                         </span>
                                         <?php if ($hit->old_price) : ?>
