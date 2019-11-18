@@ -222,7 +222,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
 <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
 <!--start-menu-->
-<script src="/js/simpleCart.min.js"> </script>
+
 
 <script src="/js/jquery.easydropdown.js"></script>
 <script type="text/javascript">

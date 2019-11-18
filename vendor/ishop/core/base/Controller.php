@@ -8,7 +8,7 @@ abstract class Controller
 {
     // информация о текущем контроллере (массив: котроллер, экшн, префикс и тд)
     public $route;
-    public $controler;
+    public $controller;
     public $model;
     public $view;
     public $prefix;
@@ -23,7 +23,7 @@ abstract class Controller
     public function __construct($route)
     {
         $this->route = $route;
-        $this->controler = $route['controller'];
+        $this->controller = $route['controller'];
         $this->model = $route['controller'];   // имя модели совпадает с именем контроллера
         // для каждого вида создаем отдельную папку во app/views
         // в этих папках будем создавать файлы с именем экшена (его представление)
@@ -57,5 +57,28 @@ abstract class Controller
         $this->meta['title'] = $title;
         $this->meta['desc'] = $desc;
         $this->meta['keywords'] = $keywords;
+    }
+
+    /**
+     * Метод из yii
+     * True для асинхронного запроса
+     * @return bool
+     */
+    public function isAjax()
+    {
+        return isset($_SERVER['HTTP_X_REQUESTED_WITH']) &&
+            $_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest';
+    }
+
+    /**
+     * Вернуть нужный вид
+     * @param $view
+     * @param array $vars
+     */
+    public function loadView($view, $vars = [])
+    {
+        extract($vars);
+        require APP . "/views/{$this->prefix}{$this->controller}/{$view}.php";
+        die();
     }
 }
