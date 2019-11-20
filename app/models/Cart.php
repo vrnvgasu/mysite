@@ -80,4 +80,52 @@ class Cart extends AppModel
 
         unset($_SESSION['cart'][$id]);
     }
+
+    /**Пересчет валюты в корзине*/
+    /*
+(
+    [cart.currency] => Array
+        (
+            [title] => доллары
+            [symbol_left] => $
+            [symbol_right] =>
+            [value] => 1.00
+            [base] => 1
+            [code] => USD
+            [id] => 5
+        )
+
+    [cart] => Array
+        (
+            [2] => Array
+                (
+                    [qty] => 1
+                    [title] => xfcs 2
+                    [alias] => chasi-2
+                    [price] => 70
+                    [img] => no_image.jpg
+                )
+
+        )
+
+    [cart.qty] => 1
+    [cart.sum] => 70
+)
+     */
+    public static function recalc($curr)
+    {
+        if (isset($_SESSION['cart.currency'])) {
+            $_SESSION['cart.sum'] = $_SESSION['cart.sum'] /
+                $_SESSION['cart.currency']['value'] * $curr->value;
+
+            foreach ($_SESSION['cart'] as $k => $v) {
+                $_SESSION['cart'][$k]['price'] = $_SESSION['cart'][$k]['price'] /
+                    $_SESSION['cart.currency']['value'] * $curr->value;
+            }
+
+            foreach ($curr as $k => $v) {
+                $_SESSION['cart.currency'][$k] = $v;
+            }
+        }
+    }
 }

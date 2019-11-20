@@ -80,6 +80,8 @@ function clearCart() {
       alert('Error!');
     }
   });
+
+  return false; // чтобы ссылка не срабатывала
 }
 /*Cart*/
 
