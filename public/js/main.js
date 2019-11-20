@@ -1,5 +1,38 @@
 'use strict';
 
+/* Search */
+// в products получаем данные запроса
+let products = new Bloodhound({
+  datumTokenizer: Bloodhound.tokenizers.whitespace,
+  queryTokenizer: Bloodhound.tokenizers.whitespace,
+  remote: {
+    wildcard: '%QUERY', //маркер, который будет заменен поисковым запросом
+    // url - делаем запрос к бэку
+    url: path + '/search/typeahead?query=%QUERY' // path задали раньше в js
+  }
+});
+
+products.initialize();
+
+$("#typeahead").typeahead({
+  //hint: false,
+  highlight: true     // подсветка того, что вводим
+}, {
+  name: 'products',
+  display: 'title',   // что будем показывать (id пойдет ключом)
+  limit: 9,
+  source: products
+});
+
+// когда выбираем в поиске из выпадающего списка
+$("#typeahead").bind('typeahead:select', function (ev, suggestion) {
+  //console.log(suggestion);
+  // suggestion - объект с id и title
+  // отправляем наш выбранный товар на бэк
+  window.location = path + '/search/?s=' + encodeURIComponent(suggestion.title);
+});
+/* end Search */
+
 /*Cart*/
 // событие на добавление в корзину
 $('body').on('click', '.add-to-cart-link', function (e) {
@@ -83,7 +116,7 @@ function clearCart() {
 
   return false; // чтобы ссылка не срабатывала
 }
-/*Cart*/
+/*end Cart*/
 
 $('#currency').change(function () {
   // перенаправляем на страницу
