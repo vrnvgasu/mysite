@@ -40,4 +40,41 @@ class CartController extends AppController
         // иначе возвращаем обратно
         redirect();
     }
+
+    // полчить шаблон (вид) корзины
+    public function showAction()
+    {
+        //метод описан в абстрактном контроллере. Просто возвращает нужный шаблон
+        $this->loadView('cart_modal');
+    }
+
+    public function deleteAction()
+    {
+        $id = !empty($_GET['id']) ? $_GET['id'] : null;
+
+        if (isset($_SESSION['cart'][$id])) {
+            $cart = new Cart();
+            // удаляем этот id из сессии корзины
+            $cart->deleteItem($id);
+        }
+
+        // если асинхронный запрос, то возвращаем вид корзины
+        if ($this->isAjax()) {
+            $this->loadView('cart_modal');
+        }
+        // иначе возвращаем обратно
+        redirect();
+    }
+
+    public function clearAction()
+    {
+        unset($_SESSION['cart']);
+
+        // если асинхронный запрос, то возвращаем вид корзины
+        if ($this->isAjax()) {
+            $this->loadView('cart_modal');
+        }
+        // иначе возвращаем обратно
+        redirect();
+    }
 }
