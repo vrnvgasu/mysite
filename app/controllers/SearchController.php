@@ -22,4 +22,21 @@ class SearchController extends AppController
         }
         die();
     }
+
+    public function indexAction()
+    {
+        $query = !empty(trim($_GET['s'])) ? trim($_GET['s']) : null;
+
+        if ($query) {
+            $products = R::find('product',
+                'title LIKE ? LIMIT 10', ["%{$query}%"]);
+        } else {
+            $products = null;
+        }
+
+        // передаем переменные в шаблон
+        // h - своя функция проверки символов (подключаем в index.php)
+        $this->setMeta('Поиск по: ' . h($query));
+        $this->set(compact('products', 'query'));
+    }
 }
