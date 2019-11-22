@@ -11,6 +11,19 @@ Router::add('^product/(?P<alias>[a-z0-9-]+)/?$', ['controller' => 'Product', 'ac
     [prefix] =>
  */
 
+// роут для категорий
+/*
+ http://mysite.test/category/electronnye
+[
+    [controller] => Category,
+    [action] => view,
+    [alias] => electronnye,
+    [prefix] => '',
+]
+ */
+Router::add('^category/(?P<alias>[a-z0-9-]+)/?$',
+    ['controller' => 'Category', 'action' => 'view']);
+
 
 //default routes - добавляем дефолтные маршруты
 

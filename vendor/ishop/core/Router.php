@@ -81,7 +81,8 @@ class Router
     public static function matchRoute($url) : bool
     {
         foreach (self::$routes as $pattern => $route) {
-            if (preg_match("#{$pattern}#", $url, $matches)) {
+            //i - регистронезависимый роутер
+            if (preg_match("#{$pattern}#i", $url, $matches)) {
                 /**http://mysite.test/page/view
                  * $matches - Array
                 [0] => page/view
