@@ -16,9 +16,21 @@ class UserController extends AppController
             $data = $_POST;
             // делаем автозаполнение модели данными
             $user->load($data);
+
+            if (!$user->validate($data)) {
+                // запишем ошибки в сессию и вернем страницу
+                // при редеректе данные из формы еще удалятся
+                $user->getErrors();
+                redirect();
+            } else {
+                $_SESSION['success'] = 'OK';
+                redirect();
+            }
         }
 
         $this->setMeta('Регистрация');
+
+
     }
 
     // авторизация

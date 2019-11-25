@@ -140,6 +140,30 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
 
 <div class="content">
+    <div class="container">
+        <div class="row"></div>
+        <div class="col-md-12">
+            <!--Ошибки-->
+            <?php if (isset($_SESSION['error'])): ?>
+                <div class="alert alert-danger">
+                    <?php
+                        echo $_SESSION['error'];
+                        // сразу же удалим ошибки из сессии
+                        unset($_SESSION['error']);
+                    ?>
+                </div>
+            <?php endif; ?>
+            <!--Успешная операция-->
+            <?php if (isset($_SESSION['success'])): ?>
+                <div class="alert alert-success">
+                    <?php
+                        echo $_SESSION['success'];
+                        unset($_SESSION['success']);
+                    ?>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
     <?=$content?>
 </div>
 
