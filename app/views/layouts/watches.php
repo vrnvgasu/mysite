@@ -40,12 +40,26 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                         </select>
                     </div>
                     <div class="box1">
-                        <select tabindex="4" class="dropdown">
-                            <option value="" class="label">English :</option>
-                            <option value="1">English</option>
-                            <option value="2">French</option>
-                            <option value="3">German</option>
-                        </select>
+                        <div class="btn btn-group">
+                            <a class="dropdown-toggle"
+                               data-toggle="dropdown" id="account">
+                                Account <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <?php if (!empty($_SESSION['user'])) : ?>
+                                    <li>
+                                        <a>
+                                            Добро пожаловать,
+                                            <?=h($_SESSION['user']['name']);?>
+                                        </a>
+                                    </li>
+                                    <li><a href="user/logout">Выход</a></li>
+                                <?php else: ?>
+                                    <li><a href="user/login">Вход</a></li>
+                                    <li><a href="user/signup">Регистрация</a></li>
+                                <?php endif; ?>
+                            </ul>
+                        </div>
                     </div>
                     <div class="clearfix"></div>
                 </div>

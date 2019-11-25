@@ -19,8 +19,6 @@ class Pagination
         $this->countPages = $this->getCountPages();
         $this->currentPage = $this->getCurrentPage($page);
         $this->uri = $this->getParams();
-
-        debug($this->uri);
     }
 
     // общее кол-во страниц

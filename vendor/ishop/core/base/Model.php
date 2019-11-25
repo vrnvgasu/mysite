@@ -18,4 +18,16 @@ abstract class Model
         // создаем подключение 1 раз через singleton
         DB::instance();
     }
+
+    // заполняем атрибуты из переданных значений
+    // типа автозаполнения
+    // в автозагузку попадут только поля указанные в $attributes
+    public function load($data)
+    {
+        foreach ($this->attributes as $name => $value) {
+            if (isset($data[$name])) {
+                $this->attributes[$name] = $data[$name];
+            }
+        }
+    }
 }
