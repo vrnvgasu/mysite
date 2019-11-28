@@ -24,6 +24,11 @@ class UserController extends AppController
                 // запишем ошибки в сессию и вернем страницу
                 // при редеректе данные из формы еще удалятся
                 $user->getErrors();
+
+                // при ошибке вернем данные пользовалю,
+                // чтобы заново все не надо было заполнять
+                $_SESSION['form_data'] = $data;
+
             } else {
                 // захешируем пароль перед сохранением
                 $user->attributes['password'] = password_hash($user->attributes['password'],

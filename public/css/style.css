@@ -3160,3 +3160,20 @@ span.twitter-typeahead {
 	color: #fff;
 	text-decoration: none;
 }
+
+form .has-success .form-control {
+	border-color: green;
+}
+
+form .has-error .form-control {
+	border-color: red;
+}
+
+.has-error, .has-success {
+	position: relative;
+}
+
+.form-control-feedback {
+	right: 10px;
+	top: 25px;
+}
