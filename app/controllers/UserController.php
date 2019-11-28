@@ -17,15 +17,26 @@ class UserController extends AppController
             // делаем автозаполнение модели данными
             $user->load($data);
 
-            if (!$user->validate($data)) {
+            //если невалидные данные или пользователь уже есть,
+            // то вернем ошибку
+            if (!$user->validate($data) ||
+            !$user->checkUnique()) {
                 // запишем ошибки в сессию и вернем страницу
                 // при редеректе данные из формы еще удалятся
                 $user->getErrors();
-                redirect();
             } else {
-                $_SESSION['success'] = 'OK';
-                redirect();
+                // захешируем пароль перед сохранением
+                $user->attributes['password'] = password_hash($user->attributes['password'],
+                PASSWORD_DEFAULT);
+                if ($user->save('user')) {
+                    $_SESSION['success'] = 'Пользователь зарегистрирован';
+                    redirect();
+                } else {
+                    $_SESSION['error'] = 'Ошибка!';
+                }
             }
+
+            redirect();
         }
 
         $this->setMeta('Регистрация');

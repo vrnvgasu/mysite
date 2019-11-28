@@ -5,6 +5,7 @@ namespace ishop\base;
 
 
 use ishop\DB;
+use RedBeanPHP\R;
 use Valitron\Validator;
 
 abstract class Model
@@ -74,5 +75,20 @@ abstract class Model
         }
         $errors .= '</ul>';
         $_SESSION['error'] = $errors;
+    }
+
+    // надо записать значения из атрибутов модели в таблицу
+    public function save($table)
+    {
+        //создаем объект ORM для данной таблицы
+        // заполняем его и сохраняем
+        $tbl = R::dispense($table);
+
+        foreach ($this->attributes as $name => $value) {
+            $tbl->$name = $value;
+        }
+
+        // передает true или false
+        return R::store($tbl);
     }
 }
