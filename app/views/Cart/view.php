@@ -86,7 +86,7 @@
                     </div>
 
                     <div class="col-md-6 account-left">
-                        <form method="post" action="user/checkout "
+                        <form method="post" action="cart/checkout "
                               id="signup" role="form"
                               data-toggle="validator">
 

@@ -7,6 +7,7 @@ namespace app\controllers;
 use app\models\Cart;
 use app\models\Order;
 use app\models\User;
+use ishop\libs\Pagination;
 use RedBeanPHP\R;
 
 class CartController extends AppController
@@ -118,6 +119,8 @@ class CartController extends AppController
                     if (!$user_id = $user->save('user')) {
                         $_SESSION['error'] = 'Ошибка!';
                         redirect();
+                    } else {
+                        $user->login();
                     }
                 }
             }
