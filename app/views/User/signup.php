@@ -1,3 +1,16 @@
+<!--start-breadcrumbs-->
+<div class="breadcrumbs">
+    <div class="container">
+        <div class="breadcrumbs-main">
+            <ol class="breadcrumb">
+                <li class="active"><a href="<?=PATH;?>">Главная</a></li>
+                <li>Регистрация</li>
+            </ol>
+        </div>
+    </div>
+</div>
+<!--end-breadcrumbs-->
+
 <!--register-starts-->
 <div class="register">
     <div class="container">
@@ -23,7 +36,7 @@
                     </div>
                     <div class="form-group has-feedback">
                         <label for="login">Password</label>
-                        <input placeholder="Password" type="text" name="password"
+                        <input placeholder="Password" type="password" name="password"
                                class="form-control"
                                id="password" required
                                data-error="Пароль должен включать не менее 6 символов"

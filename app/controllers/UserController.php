@@ -11,6 +11,11 @@ class UserController extends AppController
     // регистрация
     public function signupAction()
     {
+        // если авторизован, то сразу на главную страницу кидаем
+        if (isset($_SESSION['user'])) {
+            redirect(PATH);
+        }
+
         if (!empty($_POST)) {
             $user = new User();
             $data = $_POST;
@@ -35,6 +40,9 @@ class UserController extends AppController
                 PASSWORD_DEFAULT);
                 if ($user->save('user')) {
                     $_SESSION['success'] = 'Пользователь зарегистрирован';
+
+                    // сразу авторизуем, пока в $_POST остались данные
+                    $user->login();
                     redirect();
                 } else {
                     $_SESSION['error'] = 'Ошибка!';
@@ -52,12 +60,33 @@ class UserController extends AppController
     // авторизация
     public function loginAction()
     {
+        // если авторизован, то сразу на главную страницу кидаем
+        if (isset($_SESSION['user'])) {
+            redirect(PATH);
+        }
 
+        if (!empty($_POST)) {
+            $user = new User();
+
+            if ($user->login()) {
+                $_SESSION['success'] = 'Вы успешно авторизованы';
+            } else {
+                $_SESSION['error'] = 'Логин/пароль введены неверно';
+            }
+
+            redirect();
+        }
+
+        $this->setMeta('Вход');
     }
 
     // выход
     public function logoutAction()
     {
+        if (isset($_SESSION['user'])) {
+            unset($_SESSION['user']);
+        }
 
+        redirect();
     }
 }
