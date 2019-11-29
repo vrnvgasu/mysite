@@ -32,7 +32,9 @@
                                 </ul>
                             </div>
                         <?php else : ?>
-                            <img src="images/<?=$product->img;?>"
+                            <div class="thumb-image">
+                                <img src="images/<?=$product->img;?>">
+                            </div>
                         <?php endif; ?>
 
                     </div>

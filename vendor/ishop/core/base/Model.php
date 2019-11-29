@@ -88,7 +88,7 @@ abstract class Model
             $tbl->$name = $value;
         }
 
-        // передает true или false
+        // передает id записи или false
         return R::store($tbl);
     }
 }

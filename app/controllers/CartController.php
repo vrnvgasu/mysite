@@ -5,6 +5,8 @@ namespace app\controllers;
 
 
 use app\models\Cart;
+use app\models\Order;
+use app\models\User;
 use RedBeanPHP\R;
 
 class CartController extends AppController
@@ -78,6 +80,61 @@ class CartController extends AppController
             $this->loadView('cart_modal');
         }
         // иначе возвращаем обратно
+        redirect();
+    }
+
+    public function viewAction()
+    {
+        $this->setMeta('Корзина');
+    }
+
+    public function checkoutAction()
+    {
+        if (!empty($_POST))
+        {
+            // регистрация пользователя
+            if (!User::checkAuth()) {
+                $user = new User();
+                $data = $_POST;
+                // делаем автозаполнение модели данными
+                $user->load($data);
+
+                //если невалидные данные или пользователь уже есть,
+                // то вернем ошибку
+                if (!$user->validate($data) ||
+                    !$user->checkUnique()) {
+                    // запишем ошибки в сессию и вернем страницу
+                    // при редеректе данные из формы еще удалятся
+                    $user->getErrors();
+
+                    // при ошибке вернем данные пользовалю,
+                    // чтобы заново все не надо было заполнять
+                    $_SESSION['form_data'] = $data;
+                    redirect();
+                } else {
+                    // захешируем пароль перед сохранением
+                    $user->attributes['password'] = password_hash($user->attributes['password'],
+                        PASSWORD_DEFAULT);
+                    if (!$user_id = $user->save('user')) {
+                        $_SESSION['error'] = 'Ошибка!';
+                        redirect();
+                    }
+                }
+            }
+
+            /**
+             * сохранение заказа
+            **/
+            $data['user_id'] = $user_id ?? $_SESSION['user']['id'];
+            $data['note'] = !empty($_POST['note']) ? $_POST['note'] : '';
+            $user_email = $_SESSION['user']['email'] ?? $_POST['email'];
+
+            // сохранили заказ
+            $order_id = Order::saveOrder($data);
+            // отправили письмо о заказе
+            Order::mailOrder($order_id, $user_email);
+        }
+
         redirect();
     }
 }
