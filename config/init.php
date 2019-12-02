@@ -23,3 +23,7 @@ define("ADMIN", PATH . '/admin');
 
 // подключили здесь автозагрузчик
 require_once ROOT . '/vendor/autoload.php';
+
+// подключил env
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__.'/../');
+$dotenv->load();

@@ -4,8 +4,11 @@
 namespace app\models;
 
 
+use ishop\App;
 use ishop\base\Model;
 use RedBeanPHP\R;
+use Swift_Mailer;
+use Swift_Message;
 
 class Order extends Model
 {
@@ -91,8 +94,49 @@ Array(
 (order_id, product_id, qty, title, price) VALUES $sql_part");
     }
 
-    public static function mailOrder($order_id)
+    public static function mailOrder($order_id, $user_email)
     {
+        /**
+         * https://swiftmailer.symfony.com/docs/introduction.html
+         **/
 
+        // Create the Transport
+        $transport = (new \Swift_SmtpTransport(App::$app->getProperty('smpt_host'),
+            App::$app->getProperty('smpt_port'),
+            App::$app->getProperty('smpt_protocol')))
+            ->setUsername(App::$app->getProperty('smpt_login'))
+            ->setPassword(App::$app->getProperty('smpt_password'));
+
+        // Create the Mailer using your created Transport
+        $mailer = new Swift_Mailer($transport);
+
+        // сохраним шаблон письма в буфер
+        ob_start();
+        require APP . '/views/mail/mail_order.php';
+        $body = ob_get_clean();
+
+        // Create a message
+        $message_client = (new Swift_Message("Заказ №{$order_id}"))
+            ->setFrom([App::$app->getProperty('email') => App::$app->getProperty('shop_name')])
+            ->setTo($user_email)
+            ->setBody($body)
+        ;
+
+        $message_admin = (new Swift_Message("Заказ №{$order_id}"))
+            ->setFrom([App::$app->getProperty('email') => App::$app->getProperty('shop_name')])
+            ->setTo(App::$app->getProperty('admin_email'))
+            ->setBody($body)
+        ;
+
+        // Send the message
+        $result = $mailer->send($message_client);
+        $result = $mailer->send($message_admin);
+
+        unset($_SESSION['cart']);
+        unset($_SESSION['cart.qty']);
+        unset($_SESSION['cart.sum']);
+        unset($_SESSION['cart.currency']);
+
+        $_SESSION['success'] = 'Спасибо за заказ. С Вами свяжется менеджер';
     }
 }
