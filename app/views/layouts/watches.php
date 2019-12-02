@@ -264,6 +264,11 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 </div>
 <!--Modal-end-->
 
+<!--картинка загрузки-->
+<div class="preload">
+    <img src="images/ring.svg">
+</div>
+
 <?php
     $curr = \ishop\App::$app->getProperty('currency');
 ?>
