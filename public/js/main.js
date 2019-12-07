@@ -41,9 +41,6 @@ $('body').on('change', '.w_sidebar input', function () {
             /*(location.search ? "&" : "?") +*/ (url ? sign : "?") +
             "filter=" + data;
 
-            console.log('location.search --', location.search);
-            console.log('url --', url);
-            console.log(url);
           newURL = newURL.replace('&&', '&');
           newURL = newURL.replace('?&', '&');
           // добавляет новое состояние в историю браузера

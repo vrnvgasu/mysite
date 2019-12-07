@@ -10,6 +10,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <!--Все ссылки делает к корню сайта-->
     <base href="/">
 
+    <!--хром ругается, когда нет иконки для сайта-->
+    <link rel="shortcut icon" href="/images/start.ico" type="image/x-icon" />
+
     <?= $this->getMeta(); ?>
     <link href="/css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
 

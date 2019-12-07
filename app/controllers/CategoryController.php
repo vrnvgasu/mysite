@@ -42,10 +42,21 @@ class CategoryController extends AppController
             SELECT `product`.*  FROM `product`  WHERE category_id IN (3,4,7,1)
             AND id IN (
                 SELECT product_id FROM attribute_product WHERE attr_id IN ($filter)
+                GROUP BY product_id
+                HAVING COUNT(product_id) = кол-во выбранных категорий фильтров
+
             )
             */
-            $sql_part = "AND id IN (SELECT product_id " .
-                "FROM attribute_product WHERE attr_id IN ($filter))";
+
+            if ($filter) {
+                $cnt = Filter::getCountGroups($filter);
+                $sql_part = "AND id IN (
+                    SELECT product_id " .
+                    "FROM attribute_product WHERE attr_id IN ($filter)" .
+                    "GROUP BY product_id " .
+                    "HAVING COUNT(product_id) = $cnt" .
+                ")";
+            }
         }
 
         // всего записей товаров для данной категории

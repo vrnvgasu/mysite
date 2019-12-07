@@ -29,15 +29,15 @@ class Filter
         $this->groups = $cache->get('filter_group');
         if (!$this->groups) {
             $this->groups = $this->getGroups();
-            $cache->set('filter_group', $this->groups, 30);
+            $cache->set('filter_group', $this->groups);
         }
 
         // берем атрибуты категорий из кэша
         // если там нет, то из базы и кэшируем
         $this->attrs = $cache->get('filter_attrs');
         if (!$this->attrs) {
-            $this->attrs = $this->getAttrs();
-            $cache->set('filter_attrs', $this->attrs, 30);
+            $this->attrs = static::getAttrs();
+            $cache->set('filter_attrs', $this->attrs);
         }
 
         // возвращаем из буфера
@@ -72,7 +72,7 @@ class Filter
         )
     ,,,
      */
-    protected function getAttrs()
+    protected static function getAttrs()
     {
         $data = R::getAssoc('SELECT * FROM attribute_value');
         $attrs = [];
@@ -110,5 +110,29 @@ class Filter
         }
 
         return $filter;
+    }
+
+    // кол-во выбранных категорий в фильтрах
+    public static function getCountGroups($filter)
+    {
+        $filters = explode(',', $filter);
+        $cache = Cache::instance();
+        $attrs = $cache->get('filter_attrs');
+        if (!$attrs) {
+            $attrs = static::getAttrs();
+        }
+
+        $data = [];
+
+        foreach ($attrs as $key => $item) {
+            foreach ($item as $k => $v) {
+                if (in_array($k, $filters)) {
+                    $data[] = $key;
+                    //break;
+                }
+            }
+        }
+
+        return count($data);
     }
 }
