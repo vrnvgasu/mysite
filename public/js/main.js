@@ -1,5 +1,43 @@
 'use strict';
 
+/*Filter*/
+$('body').on('change', '.w_sidebar input', function () {
+  let checked = $('.w_sidebar input:checked'),
+      data = '';
+
+  checked.each(function () {
+    data += this.value + ',';
+  });
+
+  if (data) {
+    $.ajax({
+      url: location.href,
+      data: {filter: data},
+      beforeSend: function () {
+        // скрываем все продукты, пока не получили новые
+        $('.preload').fadeIn(300, function () {
+          $('.product-one').hide();
+        });
+      },
+      success: function (res) {
+        $('.preload').delay(500).fadeOut('slow', function () {
+          // засовываем ответ html кода с сервера
+          $('.product-one').html(res).fadeIn();
+        });
+        console.log(res);
+      },
+      error: function () {
+        alert('Ошибка');
+      }
+    })
+  } else {
+    // если пользователь снимит все фильтры,
+    // то перезапросим страницу
+    window.location = location.pathname;
+  }
+});
+/*end Filter*/
+
 /* Search */
 // в products получаем данные запроса
 let products = new Bloodhound({
