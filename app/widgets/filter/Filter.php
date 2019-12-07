@@ -92,4 +92,19 @@ class Filter
         require $this->tpl;
         return ob_get_clean();
     }
+
+    // обработать запрос из $_GET
+    // только цифры и запятые
+    public static function getFilter()
+    {
+        $filter = null;
+
+        if (!empty($_GET['filter'])) {
+            // заменить все пустой стокой кроме цифр и запятых
+            $filter = preg_replace("#[^\d,]+#", '', $_GET['filter']);
+            $filter = trim($filter, ',');
+        }
+
+        return $filter;
+    }
 }

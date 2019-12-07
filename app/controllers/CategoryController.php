@@ -6,6 +6,7 @@ namespace app\controllers;
 
 use app\models\Breadcrumbs;
 use app\models\Category;
+use app\widgets\filter\Filter;
 use ishop\App;
 use ishop\libs\Pagination;
 use RedBeanPHP\R;
@@ -34,20 +35,35 @@ class CategoryController extends AppController
         // сколько товаров выводим на страницу
         $perpage = App::$app->getProperty('pagination');
 
-        if ($this->isAjax()) {
-            debug($_GET);
-            die();
+        $sql_part = '';
+        if (!empty($_GET['filter'])) {
+            $filter = Filter::getFilter();
+            /*
+            SELECT `product`.*  FROM `product`  WHERE category_id IN (3,4,7,1)
+            AND id IN (
+                SELECT product_id FROM attribute_product WHERE attr_id IN ($filter)
+            )
+            */
+            $sql_part = "AND id IN (SELECT product_id " .
+                "FROM attribute_product WHERE attr_id IN ($filter))";
         }
 
         // всего записей товаров для данной категории
-        $total = R::count('product', "category_id IN ($ids)");
+        $total = R::count('product', "category_id IN ($ids) $sql_part");
         $pagination = new Pagination($page, $perpage, $total);
         $start = $pagination->getStart();
 
         // получаем все продукты текущей категории и всех вложенных
         // выборку начинаем с определенной позиции для пагинации
         $products = R::find('product', "category_id IN ($ids) 
-        LIMIT $start, $perpage");
+        $sql_part LIMIT $start, $perpage");
+
+        if ($this->isAjax() && !empty($_GET['filter'])) {
+            // подгрузили вид
+            $this->loadView('filter',
+                compact('products', 'pagination', 'total'));
+            // дальше скрипт не выполняется
+        }
 
         $this->setMeta($category->title, $category->description, $category->keywords);
         $this->set((compact('products', 'breadcrumbs', 'pagination', 'total')));

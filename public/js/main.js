@@ -9,6 +9,11 @@ $('body').on('change', '.w_sidebar input', function () {
     data += this.value + ',';
   });
 
+  /*
+  href	весь URL	http://www.google.com:80/search?q=javascript#test
+  pathname строка пути (относительно хоста)	/search
+  search	часть адреса после символа ?, включая символ ?	?q=javascript
+  * */
   if (data) {
     $.ajax({
       url: location.href,
@@ -23,8 +28,28 @@ $('body').on('change', '.w_sidebar input', function () {
         $('.preload').delay(500).fadeOut('slow', function () {
           // засовываем ответ html кода с сервера
           $('.product-one').html(res).fadeIn();
+
+          // удалеяем из location.search filter до & или до конца строки
+          let url = location.search.replace(/filter(.+?)(&|$)/g, '');
+
+          let sign = '';
+          if (url && url.length > 1) {
+            sign = '&';
+          }
+
+          let newURL = location.pathname + url +
+            /*(location.search ? "&" : "?") +*/ (url ? sign : "?") +
+            "filter=" + data;
+
+            console.log('location.search --', location.search);
+            console.log('url --', url);
+            console.log(url);
+          newURL = newURL.replace('&&', '&');
+          newURL = newURL.replace('?&', '&');
+          // добавляет новое состояние в историю браузера
+
+          history.pushState({}, '', newURL);
         });
-        console.log(res);
       },
       error: function () {
         alert('Ошибка');
