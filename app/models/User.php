@@ -63,7 +63,7 @@ class User extends AppModel
             // ищем в базе по логину админа или обычного пользователя
             if ($isAdmin) {
                 $user = R::findOne('user',
-                    "login = ? AND role = 'admin", [$login]);
+                    "login = ? AND role = 'admin'", [$login]);
             } else {
                 $user = R::findOne('user', "login = ?", [$login]);
             }
