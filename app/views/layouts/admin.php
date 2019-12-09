@@ -201,7 +201,7 @@
                         </a>
                     </li>
                     <li class="nav-item has-treeview menu-open">
-                        <a href="#" class="nav-link">
+                        <a href="/admin" class="nav-link">
                             <i class="nav-icon fa fa-navicon"></i>
                             <p>
                                 Категории
@@ -224,7 +224,7 @@
                         </ul>
                     </li>
                     <li class="nav-item has-treeview menu-open">
-                        <a href="#" class="nav-link">
+                        <a href="/admin" class="nav-link">
                             <i class="nav-icon fa fa-navicon"></i>
                             <p>
                                 Товары
@@ -255,7 +255,7 @@
                         </a>
                     </li>
                     <li class="nav-item has-treeview menu-open">
-                        <a href="#" class="nav-link">
+                        <a href="/admin" class="nav-link">
                             <i class="nav-icon fa fa-navicon"></i>
                             <p>
                                 Пользователи
