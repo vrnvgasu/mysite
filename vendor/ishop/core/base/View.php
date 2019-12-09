@@ -48,6 +48,7 @@ class View
         // Получаем путь к странице нашего вида
         // /home/vagrant/project2/app/views/Main/index.php
         $viewFile = APP . "/views/{$this->prefix}{$this->controler}/{$this->view}.php";
+        $viewFile = str_replace('\\', '/', $viewFile);
 
         // Подключаем файл со страницей или кидаем ошибку
         if (is_file($viewFile)) {
