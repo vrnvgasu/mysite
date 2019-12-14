@@ -59,4 +59,36 @@ class OrderController extends AppController
         $this->setMeta('Заказ ' . $order_id);
         $this->set(compact('order', 'order_products'));
     }
+
+    public function changeAction()
+    {
+        $order_id = $this->getRequestId();
+        $status = !empty($_GET['status']) ? '1' : '0';
+        $order = R::load('order', $order_id);
+
+        if (!$order) {
+            throw new \Exception('Страница не найдена', 404);
+        }
+
+        $order->status = $status;
+        $order->update_at = date('Y-m-d H:i:s');
+        R::store($order);
+
+        $_SESSION['success'] = 'Изменения сохранены';
+        redirect();
+    }
+
+    public function deleteAction()
+    {
+        $order_id = $this->getRequestId();
+        $order = R::load('order', $order_id);
+
+        if (!$order) {
+            throw new \Exception('Страница не найдена', 404);
+        }
+
+        R::trash($order);
+        $_SESSION['success'] = 'Заказ удален';
+        redirect(ADMIN . '/order');
+    }
 }

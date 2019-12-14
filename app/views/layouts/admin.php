@@ -31,6 +31,7 @@
     <!--<link rel="stylesheet" href="plugins/summernote/summernote-bs4.css">-->
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <link rel="stylesheet" href="my.css">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -282,7 +283,31 @@
         <!-- /.sidebar -->
     </aside>
 
-    <?= $content ?>
+    <div class="content-wrapper">
+        <div class="row"></div>
+        <div class="col-md-12">
+            <!--Ошибки-->
+            <?php if (isset($_SESSION['error'])): ?>
+                <div class="alert alert-danger">
+                    <?php
+                    echo $_SESSION['error'];
+                    // сразу же удалим ошибки из сессии
+                    unset($_SESSION['error']);
+                    ?>
+                </div>
+            <?php endif; ?>
+            <!--Успешная операция-->
+            <?php if (isset($_SESSION['success'])): ?>
+                <div class="alert alert-success">
+                    <?php
+                    echo $_SESSION['success'];
+                    unset($_SESSION['success']);
+                    ?>
+                </div>
+            <?php endif; ?>
+        </div>
+        <?= $content ?>
+    </div>
 
 
     <footer class="main-footer">
@@ -327,6 +352,7 @@
 </script>
 <!-- Bootstrap 4 -->
 <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="my.js"></script>
 <!-- ChartJS -->
 <!--<script src="plugins/chart.js/Chart.min.js"></script>
 
