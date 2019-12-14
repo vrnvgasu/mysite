@@ -48,7 +48,7 @@
                                         <td><?= $order['date']; ?></td>
                                         <td><?= $order['update_at']; ?></td>
                                         <td>
-                                            <a href="<?=ADMIN;?>/order/view?=1">
+                                            <a href="<?=ADMIN;?>/order/view?id=<?=$order['id'];?>">
                                                 <i class="fa fa-eye"></i>
                                             </a>
                                         </td>
