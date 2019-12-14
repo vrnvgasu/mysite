@@ -45,7 +45,7 @@ class Menu
     public function run()
     {
         $cache = Cache::instance();
-        $this->menuHtml = $cache->get('ishop_menu');
+        $this->menuHtml = $cache->get($this->cacheKey);
 
         if (!$this->menuHtml) {
             // категории уже положили в контейнер в AppController
