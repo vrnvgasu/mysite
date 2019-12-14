@@ -179,7 +179,7 @@
 
             <!-- Sidebar Menu -->
             <nav class="mt-2">
-                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <ul class="nav nav-pills nav-sidebar sidebar-menu flex-column" data-widget="treeview" role="menu" data-accordion="false">
                     <!-- Add icons to the links using the .nav-icon class
                          with font-awesome or any other icon font library -->
                     <li class="nav-item">
@@ -199,7 +199,7 @@
                         </a>
                     </li>
                     <li class="nav-item has-treeview menu-open">
-                        <a href="/admin" class="nav-link">
+                        <a href="/admin/#" class="nav-link">
                             <i class="nav-icon fa fa-navicon"></i>
                             <p>
                                 Категории
@@ -222,7 +222,7 @@
                         </ul>
                     </li>
                     <li class="nav-item has-treeview menu-open">
-                        <a href="/admin" class="nav-link">
+                        <a href="/admin/#" class="nav-link">
                             <i class="nav-icon fa fa-navicon"></i>
                             <p>
                                 Товары
@@ -253,7 +253,7 @@
                         </a>
                     </li>
                     <li class="nav-item has-treeview menu-open">
-                        <a href="/admin" class="nav-link">
+                        <a href="/admin/#" class="nav-link">
                             <i class="nav-icon fa fa-navicon"></i>
                             <p>
                                 Пользователи
