@@ -3,7 +3,9 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0 text-dark">Добавление категории</h1>
+                <h1 class="m-0 text-dark">
+                    Редактирование категории <?= $category->title; ?>
+                </h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -13,7 +15,7 @@
                             Список категорий
                         </a>
                     </li>
-                    <li class="breadcrumb-item active">Новая категория</li>
+                    <li class="breadcrumb-item active"><?= $category->title; ?></li>
                 </ol>
             </div><!-- /.col -->
         </div><!-- /.row -->
@@ -26,7 +28,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <form action="<?= ADMIN ?>/category/add" method="post"
+                <form action="<?= ADMIN ?>/category/edit" method="post"
                       data-toggle="validator">
                     <div class="box-body">
                         <div class="form-group has-feedback">
@@ -34,8 +36,9 @@
                                 Наименование категории
                             </label>
                             <input type="text" name="title" class="form-control"
-                                id="title"
-                                placeholder="Наименование категории" required>
+                                   id="title"
+                                   placeholder="Наименование категории" required
+                                   value="<?= h($category->title); ?>">
                             <span class="glyphicon form-control-feedback"
                                   aria-hidden="true"></span>
                         </div>
@@ -49,8 +52,8 @@
                                 'cache' => 0,
                                 'cacheKey' => 'admin_select',
                                 'attrs' => [
-                                     'name' => 'parent_id',
-                                     'id' => 'parent_id',
+                                    'name' => 'parent_id',
+                                    'id' => 'parent_id',
                                 ],
                                 'class' => 'form-control',
                                 'prepend' => '<option value="0">Самостоятельная категория</option>',
@@ -64,7 +67,8 @@
                             </label>
                             <input type="text" name="keywords" class="form-control"
                                    id="keywords"
-                                   placeholder="Ключевые слова">
+                                   placeholder="Ключевые слова"
+                                   value="<?= h($category->keywords); ?>">
                         </div>
                         <div class="form-group">
                             <label for="description">
@@ -72,12 +76,15 @@
                             </label>
                             <input type="text" name="description" class="form-control"
                                    id="description"
-                                   placeholder="Описание">
+                                   placeholder="Описание"
+                                   value="<?= h($category->description); ?>">
                         </div>
                     </div>
                     <div class="box-footer">
+                        <input type="hidden" name="id"
+                               value="<?= $category->id; ?>">
                         <button type="submit" class="btn btn-success">
-                            Добавить
+                            Сохранить
                         </button>
                     </div>
                 </form>

@@ -91,4 +91,16 @@ abstract class Model
         // передает id записи или false
         return R::store($tbl);
     }
+
+    public function update($table, $id)
+    {
+        $bean = R::load($table, $id);
+
+        foreach ($this->attributes as $name => $valule) {
+            $bean->$name = $valule;
+        }
+
+        // передает id записи или false
+        return R::store($bean);
+    }
 }
