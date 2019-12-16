@@ -28,8 +28,24 @@ class UserController extends AppController
         $user_id = $this->getRequestId();
         $user = R::load('user', $user_id);
 
+        // пагинация, т.к. заказов много
+        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $perpage = 2;
+        $count = R::count('order', 'WHERE user_id = ?', [$user_id]);
+        $pagination = new Pagination($page, $perpage, $count);
+        $start = $pagination->getStart();
+
+        $orders = R::getAll("SELECT `order`.`id`, `order`.`user_id`, `order`.`status`,
+         `order`.`date`, `order`.`update_at`, `order`.`currency`, ROUND(SUM(`order_product`.`price`), 2) AS `sum` 
+         FROM `order` 
+         JOIN `order_product` ON `order`.`id`=`order_product`.`order_id` 
+         WHERE `order`.`user_id` = {$user_id}
+         GROUP BY `order`.`id` 
+         ORDER BY `order`.`status`, `order`.`id` 
+         LIMIT $start, $perpage");
+
         $this->setMeta('Редактирование пользователя');
-        $this->set(compact('user'));
+        $this->set(compact('user', 'pagination', 'count', 'orders'));
     }
 
     public function loginAdminAction()

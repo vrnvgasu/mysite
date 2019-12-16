@@ -104,7 +104,49 @@
                 </div>
 
                 <h3>Заказы пользователя</h3>
-
+                <?php if ($orders) : ?>
+                    <div class="box-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Статус</th>
+                                    <th>Кол-во товара</th>
+                                    <th>Дата создания</th>
+                                    <th>Дата изменения</th>
+                                    <th>Действия</th>
+                                </tr>
+                                </thead>
+                                <tdody>
+                                    <?php foreach ($orders as $order) : ?>
+                                        <?php $class = $order['status'] ? 'success' : ''; ?>
+                                        <tr class="<?= $class; ?>">
+                                            <td><?= $order['id']; ?></td>
+                                            <td><?= $order['status'] ? 'Завершен' : 'Новый'; ?></td>
+                                            <td><?= $order['sum']; ?> <?= $order['currency']; ?></td>
+                                            <td><?= $order['date']; ?></td>
+                                            <td><?= $order['update_at']; ?></td>
+                                            <td>
+                                                <a href="<?=ADMIN;?>/order/view?id=<?=$order['id'];?>">
+                                                    <i class="fa fa-eye"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tdody>
+                            </table>
+                        </div>
+                        <div class="text-center">
+                            <p>(<?= count($orders); ?> заказа(ов) из <?= $count; ?>)</p>
+                            <?php if ($pagination->countPages > 1): ?>
+                                <?=$pagination;?>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                <?php else: ?>
+                    <p class="text-danger">Нет заказов...</p>
+                <?php endif; ?>
 
             </div>
         </div>
