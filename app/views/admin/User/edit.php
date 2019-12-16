@@ -67,16 +67,14 @@
                                 <span class="glyphicon form-control-feedback"
                                       aria-hidden="true"></span>
                             </div>
-                            <div class="form-group has-feedback">
+                            <div class="form-group">
                                 <label for="address">
                                     Адрес
                                 </label>
                                 <input type="text" name="address" class="form-control"
                                        id="address"
-                                       placeholder="Адрес" required
+                                       placeholder="Адрес"
                                        value="<?= h($user->address); ?>">
-                                <span class="glyphicon form-control-feedback"
-                                      aria-hidden="true"></span>
                             </div>
                             <div class="form-group">
                                 <label for="role">

@@ -25,6 +25,32 @@ class UserController extends AppController
 
     public function editAction()
     {
+        if (!empty($_POST)) {
+            $user_id = $this->getRequestId(false);
+            $user = new \app\models\admin\User();
+
+            $data = $_POST;
+            $user->load($data);
+
+            // если не передаем пароль при редактировании, то удалим его
+            if (!$user->attributes['password']) {
+                unset($user->attributes['password']);
+            } else {
+                $user->attributes['password'] = password_hash($user->attributes['password'], PASSWORD_DEFAULT);
+            }
+
+            if (!$user->validate($data) || !$user->checkUnique()) {
+                $user->getErrors();
+                redirect();
+            }
+
+            if ($user->update('user', $user_id)) {
+                $_SESSION['success'] = 'Изменения сохранены';
+            }
+
+            redirect();
+        }
+
         $user_id = $this->getRequestId();
         $user = R::load('user', $user_id);
 
