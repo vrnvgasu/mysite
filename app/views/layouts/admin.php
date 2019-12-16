@@ -262,13 +262,13 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="<?=ADMIN;?>/product" class="nav-link">
+                                <a href="<?=ADMIN;?>/user" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Список пользователей</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="<?=ADMIN;?>/product/add" class="nav-link">
+                                <a href="<?=ADMIN;?>/user/add" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Добавить товар</p>
                                 </a>
