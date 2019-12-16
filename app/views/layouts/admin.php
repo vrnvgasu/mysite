@@ -245,7 +245,7 @@
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a href="<?=ADMIN;?>/order" class="nav-link">
+                        <a href="<?=ADMIN;?>/cache" class="nav-link">
                             <i class="nav-icon fas fa-shopping-cart"></i>
                             <p>
                                 Кэширвоание
