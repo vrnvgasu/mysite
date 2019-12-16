@@ -270,7 +270,7 @@
                             <li class="nav-item">
                                 <a href="<?=ADMIN;?>/user/add" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Добавить товар</p>
+                                    <p>Добавить пользователя</p>
                                 </a>
                             </li>
                         </ul>
