@@ -1,5 +1,11 @@
 'use strict';
 
+ClassicEditor
+  .create( document.querySelector( '#editor1' ) )
+  .catch( error => {
+    console.error( error );
+  } );
+
 $('.delete').click(function () {
   let res = confirm('Подтвердите действие');
 

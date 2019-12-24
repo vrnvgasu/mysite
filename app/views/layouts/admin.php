@@ -31,6 +31,7 @@
     <!--<link rel="stylesheet" href="plugins/summernote/summernote-bs4.css">-->
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <!--<link rel="stylesheet" href="plugins/chart.js/Chart.min.css">-->
     <link rel="stylesheet" href="my.css">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -351,13 +352,16 @@
   $.widget.bridge('uibutton', $.ui.button)
 </script>
 <!-- Bootstrap 4 -->
+<script src="https://cdn.ckeditor.com/ckeditor5/16.0.0/classic/ckeditor.js"></script>
 <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="my.js"></script>
+
 <script src="/js/validator.js"></script>
 <!-- ChartJS -->
 <!--<script src="plugins/chart.js/Chart.min.js"></script>
+<script src="plugins/chart.js/Chart.bundle.min.js"></script>-->
+<script src="my.js"></script>
 
-<script src="plugins/sparklines/sparkline.js"></script>
+<!--<script src="plugins/sparklines/sparkline.js"></script>
 
 <script src="plugins/jqvmap/jquery.vmap.min.js"></script>
 <script src="plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
