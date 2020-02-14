@@ -77,6 +77,7 @@ class ProductController extends AppController
                 R::store($p);
 
                 $product->editFilter($id, $data); // добавляем атрибуты
+                $product->editRelatedProduct($id, $data); // добавляем связанные товары
 
                 $_SESSION['success'] = 'Товар добавлен';
             }

@@ -33,6 +33,59 @@ class Product extends AppModel
         ]
     ];
 
+    // редактируем связанные продукты
+    public function editRelatedProduct($id, $data)
+    {
+        $related_product = R::getCol('SELECT related_id FROM related_product ' .
+            'WHERE product_id = ?', [$id]);
+
+        // если data с фильтрами пустая, то удаляем для этого товара все связанные товары
+        if (empty($data['related']) && !empty($related_product)) {
+            R::exec("DELETE FROM related_product " .
+                "WHERE product_id = ?", [$id]);
+            return;
+        }
+
+        // если добавляем связанные товары
+        if (empty($related_product) && !empty($data['related'])) {
+            $sql_part = '';
+            foreach ($data['related'] as $v) {
+                $v = (int)$v;
+                $sql_part .= "($id, $v),";
+            }
+            $sql_part = rtrim($sql_part, ',');
+
+            // добавляем атрибуты для продукта из data
+            R::exec("INSERT INTO related_product " .
+                "(product_id, related_id) VALUES $sql_part");
+
+            return;
+        }
+
+        // если изменил связанные товары - удалим старые и запишем новые
+        if (!empty($data['attrs'])) {
+            // вернет разницу массивов в виде массива
+            $result = array_diff($related_product, $data['related']);
+
+            if (!empty($result) ||
+                count($related_product) != count($data['related'])) {
+                R::exec("DELETE FROM related_product " .
+                    "WHERE product_id = ?", [$id]);
+
+                $sql_part = '';
+                foreach ($data['related'] as $v) {
+                    $v = (int)$v;
+                    $sql_part .= "($id, $v),";
+                }
+                $sql_part = rtrim($sql_part, ',');
+
+                // добавляем связанные товары для продукта из data
+                R::exec("INSERT INTO related_product " .
+                    "(product_id, related_id) VALUES $sql_part");
+            }
+        }
+    }
+
     /**
      * data
      * Array
@@ -54,9 +107,9 @@ class Product extends AppModel
     [4] => 7
     [5] => 9
     )
-
     )
      */
+    // редактируем атрибуты
     public function editFilter($id, $data) {
         $filter = R::getCol('SELECT attr_id FROM attribute_product ' .
             'WHERE product_id = ?', [$id]);
