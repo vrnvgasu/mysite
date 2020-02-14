@@ -76,7 +76,7 @@ class ProductController extends AppController
                 $p->alias = $alias;
                 R::store($p);
 
-                $product->editFilter($id, $data);
+                $product->editFilter($id, $data); // добавляем атрибуты
 
                 $_SESSION['success'] = 'Товар добавлен';
             }
@@ -84,5 +84,28 @@ class ProductController extends AppController
         }
 
         $this->setMeta('Новый товар');
+    }
+
+    public function relatedProductAction()
+    {
+        // q - приходит запрос из select2 (для связанных товаров)
+        $q = isset($_GET['q']) ? $_GET['q'] : '';
+        $data['items'] = [];
+        $products = R::getAssoc('SELECT id, title FROM product ' .
+            'WHERE title LIKE ? LIMIT 10', ["%{$q}%"]);
+        if ($products) {
+            $i = 0;
+            foreach ($products as $id => $title) {
+                $data['items'][$i]['id'] = $id;
+                $data['items'][$i]['text'] = $title;
+                $i++;
+            }
+        }
+
+        echo json_encode($data);
+        /**
+         * [{id: 1, text: "часы 1"}, {id: 2, text: "xfcs 2 "}, {id: 9, text: "tur"}, {id: 10, text: "test"},…]
+         */
+        die;
     }
 }

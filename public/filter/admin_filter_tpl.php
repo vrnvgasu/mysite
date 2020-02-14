@@ -1,4 +1,4 @@
-<div class="nav-tabs-custom">
+<div class="nav-tabs-custom" id="filter">
     <ul class="nav nav-tabs">
         <?php $i = 1; foreach ($this->groups as $group_id => $group_item): ?>
             <li <?= ($i == 1) ? ' class="active"' : ''; ?>>
@@ -8,6 +8,12 @@
                 </a>
             </li>
         <?php $i++; endforeach; ?>
+
+        <li class="pull-right">
+            <a href="#" class="btn btn-danger" id="reset-filter">
+                Сброс
+            </a>
+        </li>
     </ul>
     <div class="tab-content">
         <?php if (!empty($this->attrs[$group_id])): ?>

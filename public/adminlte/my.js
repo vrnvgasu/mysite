@@ -24,3 +24,32 @@ $('.sidebar-menu a').each(function () {
     $(this).closest('.nav-treeview').addClass('active');
   }
 });
+
+$('#reset-filter').click(() => {
+  $('#filter input[type=radio]').prop('checked', false);
+
+  return false;
+});
+
+// для связанных товаров
+$(".select2").select2({
+  placeholder: "Начните вводить наименование товара",
+  //minimumInputLength: 2,
+  cache: true,
+  ajax: {
+    url: adminpath + "product/related-product",
+    delay: 250,
+    dataType: 'json',
+    data: function (params) {
+      return {
+        q: params.term,
+        page: params.pageBreak
+      };
+    },
+    processResults: function (data, params) {
+      return {
+        results: data.items,
+      }
+    }
+  }
+});
