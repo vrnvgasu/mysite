@@ -34,6 +34,28 @@ class ProductController extends AppController
         if (!empty($_POST)) {
             $product = new Product();
             $data = $_POST;
+            /**
+             * в data получаем
+             * Array
+            (
+            [title] => Salesforce
+            [category_id] => 3
+            [keywords] => 11
+            [description] => Fork from https://javascript.info/type-conversions#tostring
+            [price] => 3
+            [old_price] => 11
+            [content] =>123123123
+            [status] => on
+            [hit] => on
+            [attrs] => Array
+            (
+            [1] => 1
+            [2] => 3
+            [3] => 5
+            [4] => 7
+            [5] => 9
+            )
+            )*/
             $product->load($data);
             $product->attributes['status'] = $product->attributes['status'] ? 1 : 0;
             $product->attributes['hit'] = $product->attributes['hit'] ? 1 : 0;
@@ -53,6 +75,9 @@ class ProductController extends AppController
                 $p = R::load('product', $id);
                 $p->alias = $alias;
                 R::store($p);
+
+                $product->editFilter($id, $data);
+
                 $_SESSION['success'] = 'Товар добавлен';
             }
             redirect();

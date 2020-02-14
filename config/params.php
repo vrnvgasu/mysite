@@ -4,7 +4,7 @@
 return [
     'admin_email' => getenv('admin_email') ? getenv('admin_email') : 'admin@admin.ru',
     'shop_name' => 'Магазин магазинов',
-    'pagination' => 1,
+    'pagination' => 3,
     'smpt_host' => 'smtp.yandex.ru',     // для отправки почты
     'smpt_port' => '465',     // для отправки почты
     'smpt_protocol' => 'SSL',     // для отправки почты
