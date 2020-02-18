@@ -11,4 +11,8 @@ return [
     'smpt_login' => 'test171771',  // для отправки почты
     'smpt_password' => getenv('smpt_password'),  // для отправки почты
     'email' => 'test171771@yandex.ru',  // для отправки почты
+    'img_width' => 125,
+    'img_height' => 200,
+    'gallery_width' => 700,
+    'gallery_height' => 1000,
 ];
