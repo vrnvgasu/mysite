@@ -146,6 +146,7 @@
                     </div>
 
                     <?php new \app\widgets\filter\Filter(null, WWW . '/filter/admin_filter_tpl.php'); ?>
+                    <?php unset($_SESSION['single']); unset($_SESSION['multi']); ?>
 
                     <div class="form-group">
                         <div class="col-md-4">

@@ -73,7 +73,7 @@ new AjaxUpload(buttonSingle, {
   onComplete: function (file, response) {
     setTimeout(function () {
       buttonSingle.closest('.file-upload').find('.overlay').css({'display': 'none'});
-
+console.log(response);
       response = JSON.parse(response);
       $('.' + buttonSingle.data('name')).html('<img src="/images/' +
       response.file + '" style=:max-height: 150px;">');
@@ -98,7 +98,7 @@ new AjaxUpload(buttonMulti, {
       buttonMulti.closest('.file-upload').find('.overlay').css({'display': 'none'});
 
       response = JSON.parse(response);
-      $('.' + buttonMulti.data('name')).html('<img src="/images/' +
+      $('.' + buttonMulti.data('name')).append('<img src="/images/' +
         response.file + '" style=:max-height: 150px;">');
     }, 1000);
   }
