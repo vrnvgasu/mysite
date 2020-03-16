@@ -1,10 +1,8 @@
 <?php
 
-
 namespace ishop;
-
 // Библиоетка ORM
-use \RedBeanPHP\R as R;
+use RedBeanPHP\R;
 
 class DB
 {
@@ -25,6 +23,9 @@ class DB
         if (DEBUG) {
             R::debug(true, 1); // выводит все запросы. Обрабатываем это в шаблоне default
         }
-        
+
+        R::ext('xdispense', function ($type) {
+            return R::getRedBean()->dispense($type);
+        });
     }
 }

@@ -78,11 +78,15 @@ abstract class Model
     }
 
     // надо записать значения из атрибутов модели в таблицу
-    public function save($table)
+    public function save($table, $valid = true)
     {
         //создаем объект ORM для данной таблицы
         // заполняем его и сохраняем
-        $tbl = R::dispense($table);
+        if ($valid) {
+            $tbl = R::dispense($table);
+        } else {
+            $tbl = R::xdispense($table);
+        }
 
         foreach ($this->attributes as $name => $value) {
             $tbl->$name = $value;
