@@ -66,7 +66,7 @@ class CategoryController extends AppController
 
         // получаем все продукты текущей категории и всех вложенных
         // выборку начинаем с определенной позиции для пагинации
-        $products = R::find('product', "category_id IN ($ids) 
+        $products = R::find('product', "status = '1' AND category_id IN ($ids) 
         $sql_part LIMIT $start, $perpage");
 
         if ($this->isAjax() && !empty($_GET['filter'])) {

@@ -15,8 +15,8 @@ class SearchController extends AppController
            $query = !empty(trim($_GET['query'])) ? trim($_GET['query']) : null;
 
            if ($query) {
-               $products = R::getAll('SELECT id, title FROM product
-                    WHERE title LIKE ? LIMIT 10', ["%{$query}%"]);
+               $products = R::getAll("SELECT id, title FROM product
+                    WHERE title LIKE ? AND status = '1' LIMIT 10", ["%{$query}%"]);
                echo json_encode($products);
            }
         }
@@ -29,7 +29,7 @@ class SearchController extends AppController
 
         if ($query) {
             $products = R::find('product',
-                'title LIKE ? LIMIT 10', ["%{$query}%"]);
+                "title LIKE ? AND status = '1' LIMIT 10", ["%{$query}%"]);
         } else {
             $products = null;
         }
