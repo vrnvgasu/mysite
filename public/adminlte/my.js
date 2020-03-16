@@ -14,6 +14,41 @@ $('.delete').click(function () {
   }
 });
 
+$('.del-item').on('click', function () {
+  let res = confirm('Подтвердите действие');
+
+  if (!res) {
+    return false;
+  }
+
+  let $this = $(this),
+      id = $this.data('id'),
+      src = $this.data('src');
+  $.ajax({
+    url: adminpath + '/product/delete-gallery',
+    data: {id: id, src: src},
+    type: 'POST',
+    beforeSend: () => {
+      $this.closest('.file-upload').find('.overlay').css({'display': 'block'});
+    },
+    success: (res) => {
+      setTimeout(function () {
+        $this.closest('.file-upload').find('.overlay').css({'display': 'none'});
+
+        if (res == 1) {
+           $this.fadeOut();
+        }
+      }, 1000);
+    },
+    error: () => {
+      setTimeout(function () {
+        $this.closest('.file-upload').find('.overlay').css({'display': 'none'});
+        alert('Ошибка');
+      }, 1000);
+    }
+  });
+});
+
 $('.sidebar-menu a').each(function () {
   let location = window.location.protocol + '//' +
     window.location.host + window.location.pathname;

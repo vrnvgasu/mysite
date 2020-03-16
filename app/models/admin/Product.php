@@ -141,7 +141,7 @@ class Product extends AppModel
             // вернет разницу массивов в виде массива
             $result = array_diff($filter, $data['attrs']);
 
-            if (!empty($result)) {
+            if (!empty($result) || count($filter) != count($data['attrs'])) {
                 R::exec("DELETE FROM attribute_product " .
                     "WHERE product_id = ?", [$id]);
 

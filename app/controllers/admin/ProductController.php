@@ -52,7 +52,32 @@ class ProductController extends AppController
     public function editAction()
     {
         if (!empty($_POST)) {
-            
+            $id = $this->getRequestId(false);
+            $product = new Product();
+            $data = $_POST;
+            $product->load($data);
+            $product->attributes['status'] = $product->attributes['status'] ? '1' : '0';
+            $product->attributes['hit'] = $product->attributes['hit'] ? '1' : '0';
+            $product->getImg();
+
+            if (!$product->validate($data)) {
+                $product->getErrors();
+                redirect();
+            }
+
+            if ($product->update('product', $id)) {
+                $product->editFilter($id, $data); // добавляем атрибуты
+                $product->editRelatedProduct($id, $data); // добавляем связанные товары
+                $product->saveGallery($id);
+
+                $alias = AppModel::createAlias('product', 'alias', $data['title'], $id);
+                $product = R::load('product', $id);
+                $product->alias = $alias;
+                R::store($product);
+
+                $_SESSION['success'] = 'Изменения сохранены';
+                redirect();
+            }
         }
 
         $id = $this->getRequestId();
@@ -153,5 +178,23 @@ class ProductController extends AppController
          * [{id: 1, text: "часы 1"}, {id: 2, text: "xfcs 2 "}, {id: 9, text: "tur"}, {id: 10, text: "test"},…]
          */
         die;
+    }
+
+    public function  deleteGalleryAction()
+    {
+        $id = $_POST['id'] ?? null;
+        $src = $_POST['src'] ?? null;
+
+        if (!$id || !$src) {
+            return;
+        }
+
+        if (R::exec("DELETE FROM gallery WHERE product_id = ? " .
+            "AND img = ?", [$id, $src])) {
+            @unlink(WWW . "/images/$src");
+            exit('1');
+        }
+
+        return;
     }
 }
