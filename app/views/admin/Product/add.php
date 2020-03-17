@@ -27,7 +27,7 @@
         <div class="row">
             <div class="col-md-12">
                 <form action="<?= ADMIN ?>/product/add" method="post"
-                      data-toggle="validator">
+                      data-toggle="validator" id="add">
                     <div class="box-body">
                         <div class="form-group has-feedback">
                             <label for="title">
