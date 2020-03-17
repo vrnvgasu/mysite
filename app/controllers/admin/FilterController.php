@@ -61,6 +61,59 @@ class FilterController extends AppController
         $this->set(compact('attrs'));
     }
 
+    public function groupEditAction()
+    {
+        if (!empty($_POST)) {
+            $id = $this->getRequestId(false);
+            $group = new FilterGroup();
+            $data = $_POST;
+            $group->load($data);
+
+            if (!$group->validate($data)) {
+                $group->getErrors();
+                redirect();
+            }
+
+            if ($group->update('attribute_group', $id)) {
+                $_SESSION['success'] ='Изменения сохранены';
+                redirect();
+            }
+        }
+
+        $id = $this->getRequestId();
+        $group = R::load('attribute_group', $id);
+
+        $this->setMeta("Редактирование группы {$group->title}");
+        $this->set(compact('group'));
+    }
+
+    public function attributeEditAction()
+    {
+        if (!empty($_POST)) {
+            $id = $this->getRequestId(false);
+            $attr = new FilterAttr();
+            $data = $_POST;
+            $attr->load($data);
+
+            if (!$attr->validate($data)) {
+                $attr->getErrors();
+                redirect();
+            }
+
+            if ($attr->update('attribute_value', $id)) {
+                $_SESSION['success'] ='Изменения сохранены';
+                redirect();
+            }
+        }
+
+        $id = $this->getRequestId();
+        $attr = R::load('attribute_value', $id);
+        $attrs_group = R::findAll('attribute_group');
+
+        $this->setMeta("Редактирование атрибута {$attr->title}");
+        $this->set(compact('attr', 'attrs_group'));
+    }
+
     public function attributeAddAction()
     {
         if (!empty($_POST)) {
@@ -83,5 +136,15 @@ class FilterController extends AppController
 
         $this->setMeta('Новый фильтр');
         $this->set(compact('group'));
+    }
+
+    public function attributeDeleteAction()
+    {
+        $id = $this->getRequestId();
+        R::exec("DELETE FROM attribute_product WHERE attr_id = ?", [$id]);
+        R::exec("DELETE FROM attribute_value WHERE id = ?", [$id]);
+
+        $_SESSION['success'] ='Удалено';
+        redirect();
     }
 }
