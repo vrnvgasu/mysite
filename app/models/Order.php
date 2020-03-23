@@ -10,25 +10,23 @@ use RedBeanPHP\R;
 use Swift_Mailer;
 use Swift_Message;
 
-class Order extends Model
+class Order extends AppModel
 {
-    public $attributes = [
+    /*public $attributes = [
         'user_id' => '',
         'currency' => '',
         'note' => '',
-    ];
+    ];*/
 
     // сохраняем заказ
-    public static function saveOrder($data)
-    {
-        $data['currency'] = $_SESSION['cart.currency']['code'];
-
-        $order = new static;
-        $order->load($data);
-        $order_id = $order->save('order');
-
+    public static function saveOrder($data){
+        $order = R::dispense('order');
+        $order->user_id = $data['user_id'];
+        $order->note = $data['note'];
+        $order->currency = $_SESSION['cart.currency']['code'];
+        $order->sum = $_SESSION['cart.sum'];
+        $order_id = R::store($order);
         self::saveOrderProduct($order_id);
-
         return $order_id;
     }
 
@@ -100,37 +98,39 @@ Array(
          * https://swiftmailer.symfony.com/docs/introduction.html
          **/
 
-        // Create the Transport
-        $transport = (new \Swift_SmtpTransport(App::$app->getProperty('smpt_host'),
-            App::$app->getProperty('smpt_port'),
-            App::$app->getProperty('smpt_protocol')))
-            ->setUsername(App::$app->getProperty('smpt_login'))
-            ->setPassword(App::$app->getProperty('smpt_password'));
+        try {
+            // Create the Transport
+            $transport = (new \Swift_SmtpTransport(App::$app->getProperty('smpt_host'),
+                App::$app->getProperty('smpt_port'),
+                App::$app->getProperty('smpt_protocol')))
+                ->setUsername(App::$app->getProperty('smpt_login'))
+                ->setPassword(App::$app->getProperty('smpt_password'));
 
-        // Create the Mailer using your created Transport
-        $mailer = new Swift_Mailer($transport);
+            // Create the Mailer using your created Transport
+            $mailer = new Swift_Mailer($transport);
 
-        // сохраним шаблон письма в буфер
-        ob_start();
-        require APP . '/views/mail/mail_order.php';
-        $body = ob_get_clean();
+            // сохраним шаблон письма в буфер
+            ob_start();
+            require APP . '/views/mail/mail_order.php';
+            $body = ob_get_clean();
 
-        // Create a message
-        $message_client = (new Swift_Message("Заказ №{$order_id}"))
-            ->setFrom([App::$app->getProperty('email') => App::$app->getProperty('shop_name')])
-            ->setTo($user_email)
-            ->setBody($body)
-        ;
+            // Create a message
+            $message_client = (new Swift_Message("Заказ №{$order_id}"))
+                ->setFrom([App::$app->getProperty('email') => App::$app->getProperty('shop_name')])
+                ->setTo($user_email)
+                ->setBody($body);
 
-        $message_admin = (new Swift_Message("Заказ №{$order_id}"))
-            ->setFrom([App::$app->getProperty('email') => App::$app->getProperty('shop_name')])
-            ->setTo(App::$app->getProperty('admin_email'))
-            ->setBody($body)
-        ;
+            $message_admin = (new Swift_Message("Заказ №{$order_id}"))
+                ->setFrom([App::$app->getProperty('email') => App::$app->getProperty('shop_name')])
+                ->setTo(App::$app->getProperty('admin_email'))
+                ->setBody($body);
 
-        // Send the message
-        $result = $mailer->send($message_client);
-        $result = $mailer->send($message_admin);
+            // Send the message
+            $result = $mailer->send($message_client);
+            $result = $mailer->send($message_admin);
+        } catch (\Exception $e) {
+
+        }
 
         unset($_SESSION['cart']);
         unset($_SESSION['cart.qty']);

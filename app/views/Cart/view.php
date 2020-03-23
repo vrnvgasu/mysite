@@ -147,6 +147,12 @@
                                 <textarea name="note" class="form-control" id="note"></textarea>
                             </div>
                             <div class="form-group">
+                                <label for="pay">
+                                <input type="checkbox" id="pay" name="pay">
+                                    Оплатить онлайн
+                                </label>
+                            </div>
+                            <div class="form-group">
                                 <button type="submit" class="btn btn-primary">
                                     Оформить
                                 </button>

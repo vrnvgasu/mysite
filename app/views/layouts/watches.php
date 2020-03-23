@@ -7,6 +7,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!DOCTYPE html>
 <html>
 <head>
+    <meta name="interkassa-verification" content="здесь ключ для подтверждения кассы" />
     <!--Все ссылки делает к корню сайта-->
     <base href="/">
 

@@ -72,7 +72,15 @@
                                 <tr>
                                     <td>Статус</td>
                                     <td>
-                                        <?= $order['status'] ? 'Завершен' : 'Новый'; ?>
+                                        <?php
+                                        if ($order['status'] == 1) {
+                                            echo 'Завершен';
+                                        } elseif ($order['status'] == 2) {
+                                            echo 'Оплачен';
+                                        } else {
+                                            echo 'Новый';
+                                        }
+                                        ?>
                                     </td>
                                 </tr>
                                 <tr>

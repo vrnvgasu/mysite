@@ -1,13 +1,11 @@
 <?php
 
-
 namespace app\controllers;
-
 
 use app\models\Cart;
 use app\models\Order;
 use app\models\User;
-use ishop\libs\Pagination;
+use ishop\App;
 use RedBeanPHP\R;
 
 class CartController extends AppController
@@ -91,8 +89,7 @@ class CartController extends AppController
 
     public function checkoutAction()
     {
-        if (!empty($_POST))
-        {
+        if (!empty($_POST)) {
             // регистрация пользователя
             if (!User::checkAuth()) {
                 $user = new User();
@@ -134,10 +131,70 @@ class CartController extends AppController
 
             // сохранили заказ
             $order_id = Order::saveOrder($data);
+
+            /**
+             * Данные для оплаты
+             */
+            if (!empty($_POST['pay'])) {
+                static::setPaymentData($order_id);
+            }
+
             // отправили письмо о заказе
             Order::mailOrder($order_id, $user_email);
+
+            if (!empty($_POST['pay'])) {
+                redirect(PATH . '/payment/form.php');
+            }
         }
 
         redirect();
+    }
+
+    protected static function setPaymentData($order_id)
+    {
+        if (isset($_SESSION['payment'])) {
+            unset($_SESSION['payment']);
+        }
+
+        $_SESSION['payment']['id'] = $order_id;
+        $_SESSION['payment']['curr'] = $_SESSION['cart.currency']['code'];
+        $_SESSION['payment']['sum'] = $_SESSION['cart.sum'];
+    }
+
+    public function paymentAction(){
+        if(empty($_POST)){
+            die;
+        }
+
+        /**
+         * данные от интеркассы
+         */
+        $dataSet = $_POST;
+
+        /**
+         * код из документации интеркассы
+         * https://www.interkassa.com/index.php/documentation-sci/
+         */
+        unset($dataSet['ik_sign']);
+        ksort($dataSet, SORT_STRING);
+        array_push($dataSet, App::$app->getProperty('ik_key'));
+        $signString = implode(':', $dataSet);
+        $sign = base64_encode(md5($signString, true));
+
+        // ik_pm_no - номер заказа (передаем id из order и его получаем обратно)
+        $order = R::load('order', (int)$dataSet['ik_pm_no']);
+        if(!$order) die;
+
+        /**
+         * Проверяем данные ответа из интеркассы,
+         * чтобы пользователь не подменил их
+         */
+        if($dataSet['ik_co_id'] != App::$app->getProperty('ik_id') || $dataSet['ik_inv_st'] != 'success' || $dataSet['ik_am'] != $order->sum || $sign != $_POST['ik_sign']){
+            die;
+        }
+
+        $order->status = 2;
+        R::store($order);
+        die;
     }
 }
