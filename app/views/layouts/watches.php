@@ -11,6 +11,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <!--Все ссылки делает к корню сайта-->
     <base href="/">
 
+    <?php if(!empty($canonical)): ?>
+        <link rel="canonical" href="<?=$canonical;?>"/>
+    <?php endif; ?>
+
     <!--хром ругается, когда нет иконки для сайта-->
     <link rel="shortcut icon" href="/images/start.ico" type="image/x-icon" />
 
