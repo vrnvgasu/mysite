@@ -189,7 +189,9 @@ class CartController extends AppController
          * Проверяем данные ответа из интеркассы,
          * чтобы пользователь не подменил их
          */
-        if($dataSet['ik_co_id'] != App::$app->getProperty('ik_id') || $dataSet['ik_inv_st'] != 'success' || $dataSet['ik_am'] != $order->sum || $sign != $_POST['ik_sign']){
+        if($dataSet['ik_co_id'] != App::$app->getProperty('ik_id') ||
+            $dataSet['ik_inv_st'] != 'success' || $dataSet['ik_am'] != $order->sum ||
+            $sign != $_POST['ik_sign'] || $dataSet['ik_cur'] != $order->currency ){
             die;
         }
 

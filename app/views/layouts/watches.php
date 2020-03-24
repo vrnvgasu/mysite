@@ -52,7 +52,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                             <ul class="dropdown-menu">
                                 <?php if (!empty($_SESSION['user'])) : ?>
                                     <li>
-                                        <a>
+                                        <a href="user/cabinet">
                                             Добро пожаловать,
                                             <?=h($_SESSION['user']['name']);?>
                                         </a>
