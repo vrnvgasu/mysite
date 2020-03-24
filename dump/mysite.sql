@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: localhost
--- Время создания: Мар 18 2020 г., 12:09
+-- Время создания: Мар 24 2020 г., 20:11
 -- Версия сервера: 5.7.28-0ubuntu0.18.04.4
 -- Версия PHP: 7.3.13-1+ubuntu18.04.1+deb.sury.org+1
 
@@ -246,8 +246,19 @@ CREATE TABLE `order` (
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `update_at` timestamp NULL DEFAULT NULL,
   `currency` varchar(10) NOT NULL,
-  `note` text
+  `note` text,
+  `sum` float DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `order`
+--
+
+INSERT INTO `order` (`id`, `user_id`, `status`, `date`, `update_at`, `currency`, `note`, `sum`) VALUES
+(10, 1, 1, '2020-03-23 14:09:30', NULL, 'USD', '', 300),
+(11, 1, 0, '2020-03-23 14:11:53', '2020-03-23 14:57:14', 'USD', '', 300),
+(12, 2, 0, '2020-03-24 19:41:41', NULL, 'USD', '', 70),
+(13, 2, 2, '2020-03-24 19:42:02', NULL, 'USD', '', 900);
 
 -- --------------------------------------------------------
 
@@ -263,6 +274,16 @@ CREATE TABLE `order_product` (
   `title` varchar(255) NOT NULL,
   `price` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `order_product`
+--
+
+INSERT INTO `order_product` (`id`, `order_id`, `product_id`, `qty`, `title`, `price`) VALUES
+(12, 10, 1, 1, 'часы 1', 300),
+(13, 11, 1, 1, 'часы 1', 300),
+(14, 12, 2, 1, 'xfcs 2 ', 70),
+(15, 13, 1, 3, 'часы 1', 300);
 
 -- --------------------------------------------------------
 
@@ -349,7 +370,8 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `login`, `password`, `email`, `name`, `address`, `role`) VALUES
-(1, 'admin', '$2y$10$QI6KQouXyBomMMRuxJ210ezyE0RiVoXikCAYhPC25lDphJohASxVG', 'admin@admin.ru', 'admin', 'asdf', 'admin');
+(1, 'admin12', '$2y$10$IpFGXq7TQgjGzjn3zjt/aOLqtMb.EaLYsUMO5sP6muq65BRObbUDa', 'admin@admin.ru12', 'admin12', 'asdf12', 'admin'),
+(2, 'admin234', '$2y$10$AZ6h.PiOJ1I76yqcZbkdqe6J24BxjPMwuQ9N0yOAQ.bW2DcFNyE6C', 'admin@admin.ru234', 'admin234', 'admin234', 'user');
 
 --
 -- Индексы сохранённых таблиц
@@ -448,7 +470,7 @@ ALTER TABLE `attribute_group`
 -- AUTO_INCREMENT для таблицы `attribute_value`
 --
 ALTER TABLE `attribute_value`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT для таблицы `brand`
@@ -466,7 +488,7 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT для таблицы `currency`
 --
 ALTER TABLE `currency`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT для таблицы `gallery`
@@ -484,13 +506,13 @@ ALTER TABLE `modification`
 -- AUTO_INCREMENT для таблицы `order`
 --
 ALTER TABLE `order`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT для таблицы `order_product`
 --
 ALTER TABLE `order_product`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT для таблицы `product`
@@ -508,7 +530,7 @@ ALTER TABLE `related_product`
 -- AUTO_INCREMENT для таблицы `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
